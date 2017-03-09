@@ -30,16 +30,22 @@ class NetInterface:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip, self.PORT))
             s.sendall(data)
-            
+
     def send_point(self, data:str):
         self.__send(data)
-        
+
     def send_answer(self, data:str):
         self.__send(data)
         
+    def send_username(self, username:str):
+        self.__send(username)
+    
+    def get_username(self):
+        return self.q.get()
+
     def get_answer(self):
         return self.q.get()
-    
+
     def get_poinr(self):
         return self.q.get()
 
