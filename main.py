@@ -41,25 +41,28 @@ Print your choice. You are:
 def start_client():
     server, port = None, None
     while True:
-        addr = input('Print server address (like 192.168.0.1:8888): ')
-        #print(f'..answer: {addr}')
-        lst = addr.split(':')
-        if len(lst) == 2:
-            server, port = lst
-            if not port.isnumeric():
-                print(f'Oooops... Wrong port: {port}')
-                continue
-            srv_list = server.split('.')
-            if len(srv_list)!= 4 or not all( s.isnumeric() for s in srv_list ):
-                print(f'Oooops... Wrong server: {server}')
-                continue
-            print(f'OK. You are connecting to: {server}:{port}...')
-            break
-        else:
-            print(f'Oooops... Wrong answer: {addr}')
+        server = input('Print server address (like 192.168.0.1): ')
+        srv_list = server.split('.')
+        if len(srv_list)!= 4 or not all( s.isnumeric() for s in srv_list ):
+            print(f'Oooops... Wrong server: {server}')
+            continue
+        print(f'OK. You are connecting to: {server}:{port}...')
+        break
+    make_my_name()
+    api = NetInterface(server)
 
 def start_server():
-    pass
+    make_my_name()
+    api = NetInterface()
+
+
+def make_my_name():
+    name = ''
+    while len(name) == 0:
+        name = input('Print your name: ')
+    
+def make_my_pole():
+    # FIXME draw pole ???
 
 if __name__=='__main__':
     main()
