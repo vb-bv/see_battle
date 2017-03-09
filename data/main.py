@@ -45,11 +45,9 @@ class Data:
         os.remove(self.DBNAME)
 
     def set_my_name(self, name):
-        self.load()
         self.players['my_name'] = name
         self.save()
 
     def up_turn(self):
-        self.load()
         self.turn += 1
         self.save()
