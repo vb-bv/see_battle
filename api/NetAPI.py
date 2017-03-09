@@ -25,21 +25,26 @@ class NetInterface:
                     data = conn.recv(1024).decode('utf-8')
                     self.q.put(data)
 
-    def send(self, data:str):
+    def __send(self, data:str):
         data = data.encode('utf-8')
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.ip, self.PORT))
             s.sendall(data)
+            
+    def send_point(self, data:str):
+        self.__send(data)
+        
+    def send_answer(self, data:str):
+        self.__send(data)
+        
+    def get_answer(self):
+        return self.q.get()
+    
+    def get_poinr(self):
+        return self.q.get()
 
 if __name__ == '__main__':
-    client = NetInterface()
+    client = NetInterface('192.168.0.8')
+    client.send('sadads')
     print(client.q.get())
-    client.send('server send')
-
-
-
-
-
-
-
 
