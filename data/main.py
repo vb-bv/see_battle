@@ -18,14 +18,14 @@ class Data:
         self.my_boats = Field()
         self.enemy = Field()
         self.turn = 0
-        self.player = [1, 2]
+        self.players = {'my_name': '', 'enemy_name': ''}
 
         self.data = {
             'my': self.my,
             'enemy': self.enemy,
             'my_boats': self.my_boats,
             'turn': self.turn,
-            'player': self.player
+            'players': self.players
         }
 
     def save(self):
@@ -35,6 +35,21 @@ class Data:
     def load(self):
         with open(self.DBNAME, 'rb') as f:
             self.data = pickle.load(f)
+            self.my = self.data['my']
+            self.my_boats = self.data['my_boats']
+            self.enemy = self.data['enemy']
+            self.turn = self.data['turn']
+            self.players = self.data['players']
 
     def clean(self):
         os.remove(self.DBNAME)
+
+    def set_my_name(self, name):
+        self.load()
+        self.players['my_name'] = name
+        self.save()
+
+    def up_turn(self):
+        self.load()
+        self.turn += 1
+        self.save()
