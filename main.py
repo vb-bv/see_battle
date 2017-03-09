@@ -80,6 +80,10 @@ def start_server():
     opponent = api.get_opponent_name()
     api.send_user_name(name)
 
+    while True:
+        ship = input('Give me ship:')
+        # FIXME when to stop?
+
     ships, op_ships = [
         [],
         [],
