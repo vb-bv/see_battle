@@ -7,7 +7,10 @@ Main program file.
 '''
 from api.NetAPI import NetInterface
 from data.main import Data
-#from gui import SomeGui ## ???
+from gui.shoot_handler import Field
+
+data = Data()
+field = Field()
 
 def main():
     input('''
@@ -48,18 +51,62 @@ def start_client():
             continue
         print(f'OK. You are connecting to: {server}:{port}...')
         break
-    make_my_name()
+    name = make_my_name()
     api = NetInterface(server)
 
+    api.send_user_name(name)
+    opponent = api.get_opponent_name()
+
+    while True:
+        make_my_step(op_ships)
+        get_his_step(ships)
+        data.up_turn()
+
+def make_my_step(op_ships):
+    choice = input('Make your choice (like E2): ')
+    api.send_point(choice)
+    answer = api.get_answer()
+
+def get_his_step(ships):
+    opponent_choice = api.get_point()
+    # FIXME make answer ???
+    api.send_answer(my_answer)
+    field.pole(ships)
+
 def start_server():
-    make_my_name()
+    name = make_my_name()
     api = NetInterface()
+
+    opponent = api.get_opponent_name()
+    api.send_user_name(name)
+
+    ships, op_ships = [
+        [],
+        [],
+        [],
+        #...
+    ], [
+        [],
+        [],
+        [],
+        #...
+    ]
+
+    field.pole(ships)
+
+    while True:
+        get_his_step(ships)
+        make_my_step(op_ships)
+
+        data.up_turn()
 
 
 def make_my_name():
     name = ''
     while len(name) == 0:
         name = input('Print your name: ')
+    data.set_my_name(name)
+    return name
     
 def make_my_pole():
     # FIXME draw pole ???
