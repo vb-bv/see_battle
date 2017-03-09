@@ -35,10 +35,10 @@ class Data:
         with open(self.DBNAME, 'rb') as f:
             self.data = pickle.load(f)
 
-data = Data()
+#data = Data()
 
-data.my.add(1,2)
-data.enemy.add(3,4)
-data.my_boats.add(5,6)
-data.save()
+#data.my.add(1,2)
+#data.enemy.add(3,4)
+#data.my_boats.add(5,6)
+#data.save()
 # print(data.my.coord)
